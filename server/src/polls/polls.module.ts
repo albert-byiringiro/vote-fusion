@@ -6,4 +6,4 @@ import { ConfigModule } from "@nestjs/config";
     controllers: [],
     providers: []
 })
-export class PollsModule(){}
+export class PollsModule{}
