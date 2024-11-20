@@ -1,13 +1,17 @@
 import { Body, Controller, Logger, Post } from "@nestjs/common";
 import { CreatePollDto, JoinPollDto } from "./polls.dto";
+import { PollsService } from "./polls.service";
 
 @Controller('polls')
 export class PollsController{
+
+    constructor(private pollsService: PollsService){}
+
     @Post()
     async create(@Body() createPollDto: CreatePollDto){
-        Logger.log('In create!')
+        const result = await this.pollsService.createPoll(createPollDto)
 
-        return createPollDto
+        return result
     }
 
     @Post('join')
