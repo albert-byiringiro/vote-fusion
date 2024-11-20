@@ -1,12 +1,19 @@
 {
-  "name": "dev",
+  "name": "vote-fusion",
   "version": "1.0.0",
+  "description": "Make decisions with friends via ranked voting!",
   "main": "index.js",
   "scripts": {
+    "docker:compose": "docker-compose up -d",
+    "stop": "docker-compose down",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "keywords": [
+    "ts",
+    "react",
+    "nestjs",
+    "socketjs"
+  ],
+  "author": "Albert Byiringiro",
+  "license": "ISC"
 }
