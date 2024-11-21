@@ -19,7 +19,7 @@ export class RedisModule {
     }: RedisAsyncMOduleOptions): Promise<DynamicModule> {
         return {
             module: RedisModule,
-            imports: [],
+            imports: imports,
             providers: [],
             exports: []
         }
