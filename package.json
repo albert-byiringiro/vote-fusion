@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Make decisions with friends via ranked voting!",
   "main": "index.js",
+  "workspaces":[
+    "client",
+    "server",
+    "shared"
+  ],
   "scripts": {
     "docker:compose": "docker-compose up -d",
     "stop": "docker-compose down",
