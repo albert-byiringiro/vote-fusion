@@ -16,13 +16,19 @@ export class PollsController{
 
     @Post('join')
     async join(@Body() joinPollDto: JoinPollDto){
-        Logger.log('In join')
+        const result = await this.pollsService.joinPoll(joinPollDto)
 
-        return joinPollDto
+        return result
     }
 
     @Post('rejoin')
     async rejoin(){
-        Logger.log('Rejoin poll')
+        const result = await this.pollsService.rejoinPoll({
+            name: 'From token',
+            pollID: 'From token',
+            userID: "From token"
+        })
+        
+        return result
     }
 }
