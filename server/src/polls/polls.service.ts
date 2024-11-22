@@ -31,9 +31,17 @@ export class PollsService {
     async joinPoll(fields: JoinPollFields) {
         const userID = createUserID();
 
+        this.logger.debug(
+            `Fetching poll with ID: ${fields.pollID} for user with ID: ${userID}`
+        )
+
+        const joinedPoll = await this.pollsRepository.getPoll(fields.pollID)
+
+        // TODO - create access token
+
         return {
-            ...fields,
-            userID
+            poll: joinedPoll,
+            // accessToken: signedString
         }
     }
     
