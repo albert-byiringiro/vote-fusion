@@ -46,7 +46,11 @@ export class PollsService {
     }
     
     async rejoinPoll(fields: RejoinPollFields) {
-        return fields
+        this.logger.debug(`Rejoining poll with ID: ${fields.pollID} for user with ID: ${fields.userID} with name: ${fields.name}`);
+
+        const joinedPoll = await this.pollsRepository.addParticipants(fields)
+
+        return joinedPoll
     }
     
 }
