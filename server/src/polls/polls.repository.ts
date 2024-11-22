@@ -18,9 +18,8 @@ export class PollsRepository {
   ) {
     this.ttl = configService.get('POLL_DURATION');
   }
-
-
-async createPoll({
+  
+  async createPoll({
     votesPerVoter,
     topic,
     pollID,
@@ -56,5 +55,24 @@ async createPoll({
         );
         throw new InternalServerErrorException();
     }
+    }
+
+    async getPoll(pollID: string) {
+        this.logger.log(`Attempting to get poll with: ${pollID}`)
+
+        const key = `polls:${pollID}`
+
+        try {
+            const currentPoll = await this.redisClient.send_command(
+                'JSON_GET',
+                key,
+                '.',
+            )
+
+            this.logger.verbose(currentPoll)
+        } catch (e) {
+            this.logger.log(`Failed to get pollID ${pollID}`);
+            throw e;
+        }
     }
 }
