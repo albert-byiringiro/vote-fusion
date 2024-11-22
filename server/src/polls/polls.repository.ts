@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Redis } from 'ioredis';
 import { IORedisKey } from 'src/redis.module';
-import { CreatePollData } from './types';
+import { AddParticipantData, CreatePollData } from './types';
 import { Poll } from 'shared';
 
 @Injectable()
@@ -73,6 +73,37 @@ export class PollsRepository {
         } catch (e) {
             this.logger.log(`Failed to get pollID ${pollID}`);
             throw e;
+        }
+    }
+
+    async addParticipants({pollID, userID, name}:AddParticipantData) {
+        this.logger.log(`Attempting to add a participant with userID/name: ${userID}/${name} to ${pollID}`)
+
+        const key = `polls:${pollID}`
+        const participantPath = `.participants.${userID}`
+
+        try {
+            await this.redisClient.send_command(
+                'JSON.POST',
+                key,
+                participantPath,
+                JSON.stringify(name)
+            )
+
+            const pollJSON = await this.redisClient.send_command(
+                'JSON.GET',
+                key,
+                '.'
+            );
+
+            const poll = JSON.parse(pollJSON) as Poll
+
+            this.logger.debug(`Current Participants for pollID: ${pollID}:`, poll.participants)
+
+            return poll
+        } catch (error) {
+            this.logger.error(`Failed to add a participant with userID/name: ${userID}/${name}`);
+            throw error
         }
     }
 }
