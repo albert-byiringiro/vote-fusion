@@ -19,7 +19,10 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     }
 
     handleDisconnect(client: Socket) {
-        throw new Error('Mehtod not implemented')
+        const socket = this.io.sockets;
+
+        this.logger.log(`WS Client with id: ${client.id} connected!`)
+        this.logger.debug(`Number of connected sockets: ${socket.size}`)
     }
 
     handleConnection(client: Socket) {
