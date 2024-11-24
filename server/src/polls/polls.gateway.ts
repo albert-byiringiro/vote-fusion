@@ -3,7 +3,13 @@ import { OnGatewayInit, WebSocketGateway } from "@nestjs/websockets";
 import { PollsService } from "./polls.service";
 
 @WebSocketGateway({
-    namespace: 'polls'
+    namespace: 'polls',
+    cors: {
+        origin: [
+            'http://localhost:8080',
+            /^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):8080$/,
+        ],
+    }
 })
 export class PollsGateway implements OnGatewayInit {
     private readonly logger = new Logger(PollsGateway.name)
