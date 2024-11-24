@@ -64,7 +64,7 @@ export class PollsRepository {
 
         try {
             const currentPoll = await this.redisClient.send_command(
-                'JSON_GET',
+                'JSON.GET',
                 key,
                 '.',
             )
