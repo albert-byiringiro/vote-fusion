@@ -1,6 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway } from "@nestjs/websockets";
 import { PollsService } from "./polls.service";
+import { Socket } from "socket.io";
 
 @WebSocketGateway({
     namespace: 'polls',
@@ -15,11 +16,11 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.log(`Websocket Gateway initialized.`)
     }
 
-    handleDisconnect(client: any) {
+    handleDisconnect(client: Socket) {
         throw new Error('Mehtod not implemented')
     }
 
-    handleConnection(client: any, ...args: any[]) {
+    handleConnection(client: Socket) {
         throw new Error('Method not implemented')
     }
 }
