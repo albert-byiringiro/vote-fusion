@@ -57,7 +57,7 @@ export class PollsRepository {
     }
     }
 
-    async getPoll(pollID: string) {
+    async getPoll(pollID: string): Promise<Poll> {
         this.logger.log(`Attempting to get poll with: ${pollID}`)
 
         const key = `polls:${pollID}`
