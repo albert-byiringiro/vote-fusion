@@ -70,6 +70,8 @@ export class PollsRepository {
             )
 
             this.logger.verbose(currentPoll)
+
+            return JSON.parse(currentPoll)
         } catch (e) {
             this.logger.log(`Failed to get pollID ${pollID}`);
             throw e;
