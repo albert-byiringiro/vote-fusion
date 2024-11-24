@@ -25,7 +25,13 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.debug(`Number of connected sockets: ${socket.size}`)
     }
 
+    // TODO - use socketWithAuth (contains userID and pollID)
     handleConnection(client: Socket) {
-        throw new Error('Method not implemented')
+        const sockets = this.io.sockets
+
+        this.logger.log(`Disconnected socket id: ${client.id}`);
+        this.logger.debug(`Number of connected sockets: ${sockets.size}`)
+
+        // TODO - remove client from poll and send `participants_updated` event to remaining clients
     }
 }
