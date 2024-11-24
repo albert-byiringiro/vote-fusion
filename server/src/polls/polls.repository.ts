@@ -78,7 +78,7 @@ export class PollsRepository {
         }
     }
 
-    async addParticipants({pollID, userID, name}:AddParticipantData) {
+    async addParticipants({pollID, userID, name}:AddParticipantData): Promise<Poll> {
         this.logger.log(`Attempting to add a participant with userID/name: ${userID}/${name} to ${pollID}`)
 
         const key = `polls:${pollID}`
