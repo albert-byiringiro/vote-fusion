@@ -1,7 +1,9 @@
 import { INestApplicationContext, Logger } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
+import { JwtService } from "@nestjs/jwt";
 import { IoAdapter } from "@nestjs/platform-socket.io";
 import { ServerOptions } from "socket.io";
+import { SocketWithAuth } from "./types";
 
 export class SocketIOAdapter extends IoAdapter {
     private readonly logger = new Logger(SocketIOAdapter.name)
@@ -34,5 +36,23 @@ export class SocketIOAdapter extends IoAdapter {
 
         // we need to return this even though the signature says it returns void
         return super.createIOServer(port, optionsWithCORS)
+    }
+}
+
+const createTokenMiddleware = (jwtService: JwtService, logger: Logger) => (socket: SocketWithAuth, next) => {
+    // for postman testing support, fallback to token header
+    const token = socket.handshake.auth.token || socket.handshake.headers['token']
+
+    logger.debug(`Validating auth token before connection: ${token}`)
+
+    try {
+        const payload = jwtService.verify(token)
+        socket.userID = payload.sub
+        socket.pollID = payload.pollID
+        socket.name = payload.name
+
+        next()
+    } catch (error) {
+        next(new Error('FORBIDDEN'))
     }
 }
