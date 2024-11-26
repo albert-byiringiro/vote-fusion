@@ -1,7 +1,7 @@
 import { Logger } from "@nestjs/common";
 import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { PollsService } from "./polls.service";
-import { Namespace, Socket } from "socket.io";
+import { Namespace } from "socket.io";
 import { SocketWithAuth } from "./types";
 
 @WebSocketGateway({
@@ -33,7 +33,11 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     handleDisconnect(client: SocketWithAuth) {
         const socket = this.io.sockets;
 
-        this.logger.debug(`Socket connected with userID: ${client.userID}, pollID: ${client.pollID}, and name: "${client.name}`)
+        const { userID, pollID } = client
+
+        // these will only be available via actual socket.io client
+        // and not with Postman
+        this.logger.debug('in handleDisconnect', userID, pollID)
 
         this.logger.log(`Disconnected socket id: ${client.id}`)
         this.logger.debug(`Number of connected sockets: ${socket.size}`)
