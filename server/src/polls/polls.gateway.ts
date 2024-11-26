@@ -30,10 +30,14 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.io.emit('hello', `from ${client.id}`)
     }
 
-    handleDisconnect(client: Socket) {
+    handleDisconnect(client: SocketWithAuth) {
         const socket = this.io.sockets;
 
-        this.logger.log(`WS Client with id: ${client.id} connected!`)
+        this.logger.debug(`Socket connected with userID: ${client.userID}, pollID: ${client.pollID}, and name: "${client.name}`)
+
+        this.logger.log(`Disconnected socket id: ${client.id}`)
         this.logger.debug(`Number of connected sockets: ${socket.size}`)
+
+        // TODO - remove client from poll and send `participants_updated` event to remaining clients
     }
 }
