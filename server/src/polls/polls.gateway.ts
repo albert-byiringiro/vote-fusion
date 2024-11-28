@@ -1,5 +1,5 @@
 import { Logger } from "@nestjs/common";
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer, WsException } from "@nestjs/websockets";
 import { PollsService } from "./polls.service";
 import { Namespace } from "socket.io";
 import { SocketWithAuth } from "./types";
@@ -43,5 +43,10 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.debug(`Number of connected sockets: ${socket.size}`)
 
         // TODO - remove client from poll and send `participants_updated` event to remaining clients
+    }
+
+    @SubscribeMessage('test')
+    async test() {
+        throw new WsException({ field: 'field', message: 'You screwed up.'})
     }
 }
