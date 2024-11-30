@@ -3,6 +3,7 @@ import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessa
 import { PollsService } from "./polls.service";
 import { Namespace } from "socket.io";
 import { SocketWithAuth } from "./types";
+import { WsBadRequestException } from "src/exceptions/ws-exceptions";
 
 @UsePipes(new ValidationPipe())
 @WebSocketGateway({
@@ -48,6 +49,6 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
     @SubscribeMessage('test')
     async test() {
-        throw new WsException({ field: 'field', message: 'You screwed up.'})
+        throw new WsBadRequestException('Invalid empty data:')
     }
 }
