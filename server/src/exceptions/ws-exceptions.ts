@@ -16,3 +16,9 @@ export class WsTypeException extends WsException {
         this.type = type
     }
 }
+
+export class WsBadRequestException extends WsTypeException {
+    constructor(message: string | unknown){
+        super('BadRequest', message)
+    }
+}
