@@ -28,3 +28,9 @@ export class WsUnauthorizedException extends WsTypeException {
         super('Unauthorized', message)
     }
 }
+
+export class WsUnknownException extends WsTypeException {
+    constructor(message: string | unknown) {
+        super('Unknown', message)
+    }
+}
