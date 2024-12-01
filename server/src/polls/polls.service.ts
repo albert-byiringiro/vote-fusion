@@ -82,4 +82,13 @@ export class PollsService {
         return this.pollsRepository.addParticipants(addParticipant)
     }
     
+    async removeParticipant(pollID: string, userID: string): Promise<Poll | void> {
+        const poll = await this.pollsRepository.getPoll(pollID)
+
+        if (!poll.hasStarted) {
+            const updatedPoll = await this.pollsRepository.removeParticipant(pollID, userID)
+
+            return updatedPoll
+        }
+    }
 }
