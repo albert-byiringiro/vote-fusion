@@ -18,102 +18,116 @@ export class PollsRepository {
   ) {
     this.ttl = configService.get('POLL_DURATION');
   }
-  
+
   async createPoll({
     votesPerVoter,
     topic,
     pollID,
     userID,
-    }: CreatePollData): Promise<Poll> {
+  }: CreatePollData): Promise<Poll> {
     const initialPoll = {
-        id: pollID,
-        topic,
-        votesPerVoter,
-        participants: {},
-        adminID: userID,
-        hasStarted: false,
+      id: pollID,
+      topic,
+      votesPerVoter,
+      participants: {},
+      adminID: userID,
+      hasStarted: false,
     };
 
     this.logger.log(
-        `Creating new poll: ${JSON.stringify(initialPoll, null, 2)} with TTL ${
+      `Creating new poll: ${JSON.stringify(initialPoll, null, 2)} with TTL ${
         this.ttl
-        }`,
+      }`,
     );
 
     const key = `polls:${pollID}`;
 
     try {
-        await this.redisClient
+      await this.redisClient
         .multi([
-            ['send_command', 'JSON.SET', key, '.', JSON.stringify(initialPoll)],
-            ['expire', key, this.ttl],
+          ['send_command', 'JSON.SET', key, '.', JSON.stringify(initialPoll)],
+          ['expire', key, this.ttl],
         ])
         .exec();
-        return initialPoll;
+      return initialPoll;
     } catch (e) {
-        this.logger.error(
+      this.logger.error(
         `Failed to add poll ${JSON.stringify(initialPoll)}\n${e}`,
-        );
-        throw new InternalServerErrorException();
+      );
+      throw new InternalServerErrorException();
     }
+  }
+
+  async getPoll(pollID: string): Promise<Poll> {
+    this.logger.log(`Attempting to get poll with: ${pollID}`);
+
+    const key = `polls:${pollID}`;
+
+    try {
+      const currentPoll = await this.redisClient.send_command(
+        'JSON.GET',
+        key,
+        '.',
+      );
+
+      this.logger.verbose(currentPoll);
+
+      // if (currentPoll?.hasStarted) {
+      //   throw new BadRequestException('The poll has already started');
+      // }
+
+      return JSON.parse(currentPoll);
+    } catch (e) {
+      this.logger.error(`Failed to get pollID ${pollID}`);
+      throw e;
     }
+  }
 
-    async getPoll(pollID: string): Promise<Poll> {
-        this.logger.log(`Attempting to get poll with: ${pollID}`)
+  async addParticipant({
+    pollID,
+    userID,
+    name,
+  }: AddParticipantData): Promise<Poll> {
+    this.logger.log(
+      `Attempting to add a participant with userID/name: ${userID}/${name} to pollID: ${pollID}`,
+    );
 
-        const key = `polls:${pollID}`
+    const key = `polls:${pollID}`;
+    const participantPath = `.participants.${userID}`;
 
-        try {
-            const currentPoll = await this.redisClient.send_command(
-                'JSON.GET',
-                key,
-                '.',
-            )
+    try {
+      await this.redisClient.send_command(
+        'JSON.SET',
+        key,
+        participantPath,
+        JSON.stringify(name),
+      );
 
-            this.logger.verbose(currentPoll)
-
-            return JSON.parse(currentPoll)
-        } catch (e) {
-            this.logger.log(`Failed to get pollID ${pollID}`);
-            throw e;
-        }
+      return this.getPoll(pollID);
+    } catch (e) {
+      this.logger.error(
+        `Failed to add a participant with userID/name: ${userID}/${name} to pollID: ${pollID}`,
+      );
+      throw e;
     }
+  }
 
-    async addParticipants({pollID, userID, name}:AddParticipantData): Promise<Poll> {
-        this.logger.log(`Attempting to add a participant with userID/name: ${userID}/${name} to ${pollID}`)
+  async removeParticipant(pollID: string, userID: string): Promise<Poll> {
+    this.logger.log(`removing userID: ${userID} from poll: ${pollID}`);
 
-        const key = `polls:${pollID}`
-        const participantPath = `.participants.${userID}`
+    const key = `polls:${pollID}`;
+    const participantPath = `.participants.${userID}`;
 
-        try {
-            await this.redisClient.send_command(
-                'JSON.SET',
-                key,
-                participantPath,
-                JSON.stringify(name)
-            )
+    try {
+      await this.redisClient.send_command('JSON.DEL', key, participantPath);
 
-            return this.getPoll(pollID)
-        } catch (error) {
-            this.logger.error(`Failed to add a participant with userID/name: ${userID}/${name}`);
-            throw error
-        }
+      return this.getPoll(pollID);
+    } catch (e) {
+      this.logger.error(
+        `Failed to remove userID: ${userID} from poll: ${pollID}`,
+        e,
+      );
+      throw new InternalServerErrorException('Failed to remove participant');
     }
-
-    async removeParticipant(pollID: string, userID: string): Promise<Poll> {
-        this.logger.log(`removing userID: ${userID}, from ${pollID}`)
-
-        const key = `polls:${pollID}`
-        const participantPath = `.participants.${userID}`
-
-        try {
-            await this.redisClient.send_command('JSON_DEL', key, participantPath)
-
-            return this.getPoll(pollID)
-        } catch (error) {
-            this.logger.error(`Failed to remove userID: ${userID} from poll: ${pollID}`, error)
-
-            throw new InternalServerErrorException('Failed to remove participant')
-        }
-    }
+  }
 }
