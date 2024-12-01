@@ -54,6 +54,12 @@ export type AddNominationData = {
     nomination: Nomination;
 }
 
+export type AddParticipantRankingData = {
+    pollID: string;
+    userID: string;
+    rankings: string[]
+}
+
 // guard types
 export type AuthPayload = {
     userID: string,
