@@ -190,4 +190,20 @@ export class PollsRepository {
       );
     }
   }
+
+  async startPoll(pollID: string): Promise<Poll> {
+    this.logger.log(`Setting hasStarted for poll: ${pollID}`)
+
+    const key = `polls:${pollID}`
+
+    try {
+      await this.redisClient.send_command('JSON_SET', key, '.hasStarted', JSON.stringify(true))
+
+      return this.getPoll(pollID)
+    } catch (error) {
+      this.logger.error(`Failed set hasStarted for pollID: ${pollID}`, error)
+
+      throw new InternalServerErrorException('There was an error starting the poll.')
+    }
+  }
 }
