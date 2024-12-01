@@ -19,15 +19,15 @@ export type RejoinPollFields = {
     pollID: string;
     userID: string;
     name: string;
-}
+}       
 
-export interface AddParticipantFields {
+export type AddParticipantFields = {
     pollID: string;
     userID: string;
     name: string;
 }
 
-export interface RemoveParticipantData {
+export type RemoveParticipantData = {
     pollID: string;
     userID: string;
 }
