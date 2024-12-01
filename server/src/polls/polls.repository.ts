@@ -31,6 +31,7 @@ export class PollsRepository {
         votesPerVoter,
         participants: {},
         adminID: userID,
+        hasStarted: false,
     };
 
     this.logger.log(
