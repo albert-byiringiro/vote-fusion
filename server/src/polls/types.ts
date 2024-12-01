@@ -26,6 +26,11 @@ export interface AddParticipantFields {
     name: string;
 }
 
+export interface RemoveParticipantData {
+    pollID: string;
+    userID: string;
+}
+
 // polls repository types
 
 export type CreatePollData = {
