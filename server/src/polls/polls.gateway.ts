@@ -163,8 +163,9 @@ import { NominationDto } from './polls.dto';
       this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
 
+    @SubscribeMessage('submit_rankings')
     async submitRankings(@ConnectedSocket() client: SocketWithAuth, @MessageBody('rankings') rankings: string[],): Promise<void> {
-      
+
       this.logger.debug(
         `Submitting votes for user: ${client.userID} belonging to pollID: "${client.pollID}"`,
       );
