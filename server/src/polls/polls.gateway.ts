@@ -102,6 +102,7 @@ import { NominationDto } from './polls.dto';
       @MessageBody('id') id: string,
       @ConnectedSocket() client: SocketWithAuth,
     ) {
+      
       this.logger.debug(
         `Attempting to remove participant ${id} from poll ${client.pollID}`,
       );
@@ -150,6 +151,16 @@ import { NominationDto } from './polls.dto';
       );
   
       this.io.to(client.pollID).emit('poll_updated', updatedPoll);
+    }
+
+    @UseGuards(GatewayAdminGuard)
+    @SubscribeMessage('start_vote')
+    async startVote(@ConnectedSocket() client: SocketWithAuth): Promise<void> {
+      this.logger.debug(`Attempting to start voting for poll: ${client.pollID}`)
+
+      const updatedPoll = await this.pollsService.startPoll(client.pollID)
+
+      this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
   }
   
