@@ -92,17 +92,7 @@ export class PollsRepository {
                 JSON.stringify(name)
             )
 
-            const pollJSON = await this.redisClient.send_command(
-                'JSON.GET',
-                key,
-                '.'
-            );
-
-            const poll = JSON.parse(pollJSON) as Poll
-
-            this.logger.debug(`Current Participants for pollID: ${pollID}:`, poll.participants)
-
-            return poll
+            return this.getPoll(pollID)
         } catch (error) {
             this.logger.error(`Failed to add a participant with userID/name: ${userID}/${name}`);
             throw error
