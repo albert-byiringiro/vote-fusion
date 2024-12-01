@@ -132,7 +132,7 @@ export class PollsRepository {
     }
   }
 
-  async addNomination({ pollID, nominationID, nomination }: AddNominationData) {
+  async addNomination({ pollID, nominationID, nomination }: AddNominationData): Promise<Poll> {
     this.logger.log(`Attempting to add a nomination with nominationID/nomination: ${nominationID}/${nomination.text} to pollID: ${pollID}`)
 
     const key = `polls:${pollID}`
@@ -140,6 +140,8 @@ export class PollsRepository {
 
     try {
       await this.redisClient.send_command('JSON_SET', key, nominationPath, JSON.stringify(nomination))
+
+      return this.getPoll(pollID)
     } catch (error) {
       this.logger.error(`Failed to add a nomination with nominationID/text: ${nominationID}/${nomination.text} to pollID: ${pollID}`, error)
 
