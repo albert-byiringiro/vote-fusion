@@ -5,6 +5,7 @@ import { Namespace } from "socket.io";
 import { SocketWithAuth } from "./types";
 import { WsCatchAllFilter } from "src/exceptions/ws-catch-all-filter";
 import { GatewayAdminGuard } from "./gateway-admin.guard";
+import { NominationDto } from "./polls.dto";
 
 @UsePipes(new ValidationPipe())
 @UseFilters(new WsCatchAllFilter())
