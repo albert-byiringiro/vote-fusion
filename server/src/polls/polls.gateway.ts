@@ -34,7 +34,7 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         const roomName = client.pollID
         await client.join(roomName)
 
-        const connectedClients = this.io.adapter.rooms.get(roomName).size;
+        const connectedClients = this.io.adapter.rooms?.get(roomName)?.size ?? 0;
 
         this.logger.debug(`userID: ${client.userID} joined room with name: ${roomName}`)
 
