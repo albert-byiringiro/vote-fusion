@@ -131,16 +131,18 @@ export class PollsService {
   }
 
   async startPoll(pollID: string): Promise<Poll> {
-    return this.pollsRepository.startPoll(pollID)
+    return this.pollsRepository.startPoll(pollID);
   }
 
   async submitRankings(rankingsData: SubmitRankingsFields): Promise<Poll> {
-    const hasPollStarted = this.pollsRepository.getPoll(rankingsData.pollID)
-    
+    const hasPollStarted = this.pollsRepository.getPoll(rankingsData.pollID);
+
     if (!hasPollStarted) {
-      throw new BadRequestException('Participants cannot rank until the poll has started.')
+      throw new BadRequestException(
+        'Participants cannot rank until the poll has started.',
+      );
     }
 
-    return this.pollsRepository.addParticipantRankings(rankingsData)
+    return this.pollsRepository.addParticipantRankings(rankingsData);
   }
 }
