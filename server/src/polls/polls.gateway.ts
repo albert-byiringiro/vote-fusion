@@ -55,7 +55,7 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         const updatedPoll = await this.pollsService.removeParticipant(pollID, userID)
 
         const roomName = client.pollID
-        const clientCount = this.io.adapter.rooms.get(roomName).size
+        const clientCount = this.io.adapter.rooms.get(roomName)?.size ?? 0
 
         this.logger.log(`Disconnected socket id: ${client.id}`)
         this.logger.debug(`Number of connected sockets: ${sockets.size}`)
