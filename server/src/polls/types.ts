@@ -27,11 +27,6 @@ export type AddParticipantFields = {
     name: string;
 }
 
-export type RemoveParticipantData = {
-    pollID: string;
-    userID: string;
-}
-
 export type AddNominationFields = {
     pollID: string;
     userID: string;
