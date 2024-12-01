@@ -82,7 +82,6 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
 
-    @UseGuards(GatewayAdminGuard)
     @SubscribeMessage('nominate')
     async nominate(
         @MessageBody() nomination: NominationDto,
@@ -98,4 +97,18 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
         this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
+
+    @UseGuards(GatewayAdminGuard)
+    @SubscribeMessage('remove_nomination')
+    async removeNomination(
+        @MessageBody() nominationID: string,
+        @ConnectedSocket() client: SocketWithAuth,
+    ): Promise<void> {
+        this.logger.debug(`Attempting to remove nomination for user ${client.userID} from poll ${client.pollID}`)
+
+        const updatedPoll = await this.pollsService.removeNomination(client.pollID, nominationID)
+
+        this.io.to(client.pollID).emit('poll_updated', updatedPoll)
+    }
+    
 }
