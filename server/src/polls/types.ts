@@ -19,7 +19,7 @@ export type RejoinPollFields = {
     pollID: string;
     userID: string;
     name: string;
-}       
+}
 
 export type AddParticipantFields = {
     pollID: string;
@@ -30,6 +30,12 @@ export type AddParticipantFields = {
 export type RemoveParticipantData = {
     pollID: string;
     userID: string;
+}
+
+export type AddNominationFields = {
+    pollID: string;
+    userID: string;
+    text: string
 }
 
 // polls repository types
