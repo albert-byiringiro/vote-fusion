@@ -103,4 +103,8 @@ export class PollsService {
             userID, text
         }})
     }
+
+    async removeNomination(pollID: string, nominationID: string): Promise<Poll> {
+        return this.pollsRepository.removeNomination(pollID, nominationID)
+    }
 }
