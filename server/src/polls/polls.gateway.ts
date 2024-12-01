@@ -82,6 +82,7 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
 
+    @UseGuards(GatewayAdminGuard)
     @SubscribeMessage('nominate')
     async nominate(
         @MessageBody() nomination: NominationDto,
