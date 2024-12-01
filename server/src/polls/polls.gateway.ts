@@ -38,6 +38,14 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.debug(`userID: ${client.userID} joined room with name: ${roomName}`)
 
         this.logger.debug(`Total Clients connected to room '${roomName}': ${connectedClients}`)
+
+        const updatedPoll = await this.pollsService.addParticipant({
+            pollID: client.pollID,
+            userID: client.userID,
+            name: client.name
+        })
+
+        this.io.to(roomName).emit('poll_updated', updatedPoll)
     }
 
     handleDisconnect(client: SocketWithAuth) {
