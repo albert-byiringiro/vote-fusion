@@ -48,19 +48,23 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.io.to(roomName).emit('poll_updated', updatedPoll)
     }
 
-    handleDisconnect(client: SocketWithAuth) {
-        const socket = this.io.sockets;
+    async handleDisconnect(client: SocketWithAuth) {
+        const sockets = this.io.sockets;
 
         const { userID, pollID } = client
+        const updatedPoll = await this.pollsService.removeParticipant(pollID, userID)
 
-        // these will only be available via actual socket.io client
-        // and not with Postman
-        this.logger.debug('in handleDisconnect', userID, pollID)
+        const roomName = client.pollID
+        const clientCount = this.io.adapter.rooms.get(roomName).size
 
         this.logger.log(`Disconnected socket id: ${client.id}`)
-        this.logger.debug(`Number of connected sockets: ${socket.size}`)
+        this.logger.debug(`Number of connected sockets: ${sockets.size}`)
+        this.logger.debug(`Total clients connected to room '${roomName}': ${clientCount}`)
 
-        // TODO - remove client from poll and send `participants_updated` event to remaining clients
+        if (updatedPoll) {
+            this.io.to(pollID).emit('poll_updated', updatedPoll)
+        }
+
     }
 
     @SubscribeMessage('test')
