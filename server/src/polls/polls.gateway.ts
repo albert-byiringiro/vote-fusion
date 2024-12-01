@@ -22,7 +22,7 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.log(`Websocket Gateway initialized.`)
     }
 
-    handleConnection(client: SocketWithAuth) {
+    async handleConnection(client: SocketWithAuth) {
         const sockets = this.io.sockets
 
         this.logger.debug(`Socket connected with userID: ${client.userID}, pollID: ${client.pollID}, and name: "${client.name}`)
@@ -30,7 +30,14 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
         this.logger.log(`WS Client with id: ${client.id} connected!`);
         this.logger.debug(`Number of connected sockets: ${sockets.size}`)
 
-        this.io.emit('hello', `from ${client.id}`)
+        const roomName = client.pollID
+        await client.join(roomName)
+
+        const connectedClients = this.io.adapter.rooms.get(roomName).size;
+
+        this.logger.debug(`userID: ${client.userID} joined room with name: ${roomName}`)
+
+        this.logger.debug(`Total Clients connected to room '${roomName}': ${connectedClients}`)
     }
 
     handleDisconnect(client: SocketWithAuth) {
