@@ -148,4 +148,21 @@ export class PollsRepository {
       throw new InternalServerErrorException(`Failed to add a nominationID/text: ${nominationID}/${nomination.text} to pollID: ${pollID}`)
     }
   }
+
+  async removeNomination(pollID: string, nominationID: string): Promise<Poll> {
+    this.logger.log(`removing nominationID: ${nominationID} from poll: ${pollID}`)
+
+    const key = `polls:${pollID}`
+    const nominationPath = `.nominations.${nominationID}`
+
+    try {
+      await this.redisClient.send_command('JSON_DEL', key, nominationPath)
+
+      return this.getPoll(pollID)
+    } catch (error) {
+      this.logger.error(`Failed to remove a nomination with nominationID: ${nominationID} to pollID: ${pollID}`, error)
+
+      throw new InternalServerErrorException(`Failed to remove a nominationID: ${nominationID} to pollID: ${pollID}`)
+    }
+  }
 }
