@@ -80,4 +80,20 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
         this.io.to(client.pollID).emit('poll_updated', updatedPoll)
     }
+
+    @SubscribeMessage('nominate')
+    async nominate(
+        @MessageBody() nomination: NominationDto,
+        @ConnectedSocket() client: SocketWithAuth,
+    ): Promise<void> {
+        this.logger.debug(`Attempting to add nomination for user ${client.userID} to poll ${client.pollID}\n${nomination.text}`)
+
+        const updatedPoll = await this.pollsService.addNomination({
+            pollID: client.pollID,
+            userID: client.userID,
+            text: nomination.text,
+        })
+
+        this.io.to(client.pollID).emit('poll_updated', updatedPoll)
+    }
 }
