@@ -15,6 +15,10 @@ export class PollsService {
         private readonly jwtService: JwtService
     ){}
 
+    async getPoll(pollID: string): Promise<Poll> {
+        return this.pollsRepository.getPoll(pollID)
+    }
+
     async createPoll(fields: CreatePollFields) {
         const pollID = createPollID()
         const userID = createUserID()
