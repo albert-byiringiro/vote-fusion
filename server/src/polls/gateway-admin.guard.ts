@@ -2,6 +2,8 @@ import { CanActivate, ExecutionContext, Injectable, Logger } from "@nestjs/commo
 import { Observable } from "rxjs";
 import { PollsService } from "./polls.service";
 import { JwtService } from "@nestjs/jwt";
+import { AuthPayload, SocketWithAuth } from "./types";
+import { WsUnauthorizedException } from "src/exceptions/ws-exceptions";
 
 @Injectable()
 export class GatewayAdminGuard implements CanActivate{
@@ -14,6 +16,33 @@ export class GatewayAdminGuard implements CanActivate{
     ){}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        throw new Error("Mehtod not implemented");  
+        const socket: SocketWithAuth = context.switchToWs().getClient();
+        
+        // for testing support, fallback to token header
+        const token = socket.handshake.auth.token || socket.handshake.headers['token']
+
+        if (!token) {
+            this.logger.error('No authorization token provided.')
+
+            throw new WsUnauthorizedException('No token provided')
+        }
+
+        try {
+            const payload = this.jwtService.verify<AuthPayload & { sub: string}>(token)
+
+            this.logger.debug(`Validating admin using token payload`, payload)
+
+            const { sub, pollID } = payload
+
+            const poll = await this.pollsService.getPoll(pollID)
+
+            if (sub !== poll.adminID) {
+                throw new WsUnauthorizedException('Admin privileges required')
+            }
+
+            return true
+        } catch (error) {
+            throw new WsUnauthorizedException('Admin privilige required')
+        }
     }
 }
