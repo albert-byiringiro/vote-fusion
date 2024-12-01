@@ -1,5 +1,5 @@
 import { Injectable, Logger } from "@nestjs/common";
-import { AddParticipantFields, CreatePollFields, JoinPollFields, RejoinPollFields } from "./types";
+import { AddParticipantFields, CreatePollFields, JoinPollFields, RejoinPollFields, RemoveParticipantData } from "./types";
 import { createPollID, createUserID } from "src/ids";
 import { PollsRepository } from "./polls.repository";
 import { JwtService } from "@nestjs/jwt";
@@ -86,7 +86,9 @@ export class PollsService {
         return this.pollsRepository.addParticipant(addParticipant)
     }
     
-    async removeParticipant(pollID: string, userID: string): Promise<Poll | void> {
+    async removeParticipant(fields: RemoveParticipantData): Promise<Poll | void> {
+        const {pollID, userID} = fields
+        
         const poll = await this.pollsRepository.getPoll(pollID)
 
         if (!poll.hasStarted) {
