@@ -1,9 +1,10 @@
-import { BadRequestException, Logger, UseFilters, UsePipes, ValidationPipe } from "@nestjs/common";
-import { OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
+import { BadRequestException, Logger, UseFilters, UseGuards, UsePipes, ValidationPipe } from "@nestjs/common";
+import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } from "@nestjs/websockets";
 import { PollsService } from "./polls.service";
 import { Namespace } from "socket.io";
 import { SocketWithAuth } from "./types";
 import { WsCatchAllFilter } from "src/exceptions/ws-catch-all-filter";
+import { GatewayAdminGuard } from "./gateway-admin.guard";
 
 @UsePipes(new ValidationPipe())
 @UseFilters(new WsCatchAllFilter())
@@ -67,8 +68,10 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
     }
 
-    @SubscribeMessage('test')
-    async test() {
-        throw new BadRequestException({ test: 'test'})
-    }
+    @UseGuards(GatewayAdminGuard)
+    @SubscribeMessage('remove_participant')
+    async removeParticipant(
+        @MessageBody('id') id:string,
+        @ConnectedSocket() client: SocketWithAuth
+    ) {}
 }
