@@ -73,5 +73,11 @@ export class PollsGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
     async removeParticipant(
         @MessageBody('id') id:string,
         @ConnectedSocket() client: SocketWithAuth
-    ) {}
+    ) {
+        this.logger.debug(`Attempting to remove participant ${id} from poll ${client.pollID}`)
+
+        const updatedPoll = await this.pollsService.removeParticipant(client.pollID, id)
+
+        this.io.to(client.pollID).emit('poll_updated', updatedPoll)
+    }
 }
