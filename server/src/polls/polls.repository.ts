@@ -259,11 +259,25 @@ export class PollsRepository {
     const resultsPath = `.results`
 
     try {
-      await this.redisClient.send_command(`JSON_SET`, key, resultsPath, JSON.stringify(results))
+      await this.redisClient.send_command(`JSON.SET`, key, resultsPath, JSON.stringify(results))
 
       return this.getPoll(pollID)
     } catch (error) {
       this.logger.error(`Failed to add results for pollID: ${pollID}`, results, error)
+
+      throw new InternalServerErrorException(`Failed to add results for pollID: ${pollID}`)
+    }
+  }
+
+  async deletePoll(pollID: string): Promise<void> {
+    const key = `polls:${pollID}`
+    
+    this.logger.log(`deleting poll: ${pollID}`)
+
+    try {
+      await this.redisClient.send_command('JSON.DEL', key)
+    } catch (error) {
+      this.logger.error(`Failed to delete poll: ${pollID}`, error)
 
       throw new InternalServerErrorException(`Failed to delete poll: ${pollID}`)
     }
