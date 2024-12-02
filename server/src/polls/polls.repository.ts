@@ -37,6 +37,7 @@ export class PollsRepository {
       participants: {},
       nominations: {},
       rankings: {},
+      results: [],
       adminID: userID,
       hasStarted: false,
     };
