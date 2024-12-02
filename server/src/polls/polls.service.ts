@@ -11,6 +11,7 @@ import {
   RejoinPollFields,
   SubmitRankingsFields,
 } from './types';
+import getResults from './getResults';
 
 @Injectable()
 export class PollsService {
@@ -144,5 +145,13 @@ export class PollsService {
     }
 
     return this.pollsRepository.addParticipantRankings(rankingsData);
+  }
+
+  async computeResults(pollID: string): Promise<Poll> {
+    const poll = await this.pollsRepository.getPoll(pollID)
+
+    const results = getResults(poll.rankings, poll.nominations, poll.votesPerVoter)
+
+    return this.pollsRepository.addResults(pollID, results)
   }
 }
