@@ -154,4 +154,8 @@ export class PollsService {
 
     return this.pollsRepository.addResults(pollID, results)
   }
+
+  async cancelPoll(pollID: string): Promise<void> {
+    await this.pollsRepository.deletePoll(pollID)
+  }
 }
