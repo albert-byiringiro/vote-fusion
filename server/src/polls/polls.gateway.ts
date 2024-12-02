@@ -193,4 +193,14 @@ export class PollsGateway
 
     this.io.to(client.pollID).emit('poll_updated', updatedPoll)
   }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('cancel_poll')
+  async cancelPoll(@ConnectedSocket() client: SocketWithAuth): Promise<void> {
+    this.logger.debug(`Cancelling poll with id: ${client.pollID}`)
+
+    await this.pollsService.cancelPoll(client.pollID)
+
+    this.io.to(client.pollID).emit('poll_cancelled')
+  }
 }
