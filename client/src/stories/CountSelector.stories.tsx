@@ -1,31 +1,51 @@
-import React from 'react';
-import { Meta, StoryFn } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
+
 import CountSelector from '../components/ui/CountSelector';
 
-const meta: Meta<typeof CountSelector> = {
-  title: 'CountSelector',
+type StoryProps = React.ComponentProps<typeof CountSelector>;
+
+const meta = {
+  title: 'Components/CountSelector',
   component: CountSelector,
   argTypes: {
-    onChange: { action: 'count changed' },
+    onChange: { 
+      action: 'count changed',
+    },
   },
   args: {
-    initial: 3,
+    onChange: fn(),
     min: 0,
     max: 5,
     step: 1,
+    initial: 3,
   },
-};
+} as Meta<typeof CountSelector>;
 
 export default meta;
 
-export const Default: StoryFn<typeof CountSelector> = (args) => (
-  <div className="h-screen max-w-sm m-auto">
-    <CountSelector {...args} />
-  </div>
-);
+type Story = StoryObj<StoryProps>;
 
-export const Inc2: StoryFn<typeof CountSelector> = (args) => (
-  <div className="h-screen max-w-sm m-auto">
-    <CountSelector {...{ ...args, step: 2 }} />
-  </div>
-);
+export const Default: Story = {};
+
+export const StepOfTwo: Story = {
+  args: {
+    step: 2,
+  }
+};
+
+export const WideRange: Story = {
+  args: {
+    min: -10,
+    max: 10,
+    initial: 0,
+  },
+};
+
+export const SmallRange: Story = {
+  args: {
+    min: 0,
+    max: 3,
+    initial: 1,
+  },
+};
