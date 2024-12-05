@@ -9,13 +9,13 @@ type CountSelectorProps = {
   onChange: (val: number) => void;
 };
 
-const CountSelector: React.FC<CountSelectorProps> = ({
+const CountSelector = ({
   min,
   max,
   step,
   initial,
   onChange,
-}) => {
+}: CountSelectorProps) => {
   if (initial < min || initial > max) {
     console.warn(
       `'initial' = ${initial} must in the rang eof ${min} and ${max}. Setting a default initial value`
