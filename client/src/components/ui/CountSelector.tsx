@@ -39,6 +39,15 @@ const CountSelector: React.FC<CountSelectorProps> = ({
             >
                 -
             </button>
+            <div className="text-2xl font-bold">{current}</div>
+            <button 
+            type="button"
+            className="btn-round btn-round-orange"
+            disabled={current + step > max}
+            onClick={() => setCurrent(current + step)}
+            >
+                +
+            </button>
         </div>
     )
 }
