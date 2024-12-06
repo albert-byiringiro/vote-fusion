@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx", // Use the new JSX transform if applicable
-    "types": ["@types/react", "@types/react-dom", "@types/jest"] // Include types for React and React-DOM
+    "types": ["@types/react", "@types/react-dom", "@types/jest", "@types/react-transition-group"]
   },
   "include": ["./src", "./jest-setup.ts"] // Ensure all relevant files are included
 }
