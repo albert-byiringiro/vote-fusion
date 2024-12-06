@@ -3,3 +3,10 @@ type LoaderProps = {
     isLoading: boolean;
     width?: number;
 }
+
+const colorStyles = {
+    blue: 'bg-blue',
+    orange: 'bg-orange',
+    purple: 'bg-purple',
+}
+
