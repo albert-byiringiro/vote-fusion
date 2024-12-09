@@ -49,6 +49,7 @@ const NominationForm = ({
                 <button 
                     className="box btn-purple"
                     disabled={!nominationText.length || nominationText.length > 100}
+                    onClick={() => handleSubmitNomination(nominationText)}
                 >
                     Nominate
                 </button>
