@@ -1,4 +1,4 @@
-import RankedCheckBox from "./components/ui/RankedCheckBox";
+import SnackBar from "./components/ui/SnackBar";
 
 export default function App() {
   return (
@@ -6,7 +6,11 @@ export default function App() {
     <h1 className="text-3xl font-bold underline">
       Hello world!
     </h1>
-    <RankedCheckBox value={"choose the Lord to be happy."} rank={7}/>
+    <SnackBar message={"Please don't pass me by"} show={false} onClose={function (): void {
+        throw new Error("Function not implemented.");
+      } }/>
+
+    <p className="">Keep me here</p>
     </>
   )
 }
