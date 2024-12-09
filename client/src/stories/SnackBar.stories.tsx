@@ -27,3 +27,14 @@ export const Standard: Story = {
         title: 'Heyo'
     },
 }
+
+export const Error: Story = {
+    render: (args) => (
+        <SnackBar {...args}/>
+    ),
+    args: {
+        message: "Ooops! There is a problem!",
+        title: 'Error Alert!',
+        type: 'error',
+    }
+}
