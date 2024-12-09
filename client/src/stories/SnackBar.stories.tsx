@@ -1,0 +1,29 @@
+import { Meta, StoryObj } from "@storybook/react/*";
+import SnackBar from "../components/ui/SnackBar";
+import { ComponentProps } from "react";
+
+type StoryProps = ComponentProps<typeof SnackBar>
+
+export default {
+    title: 'SnackBar',
+    component: SnackBar,
+    argTypes: {
+        onClose: { action: 'close-a-roo' },
+    },
+    args: {
+        show: true,
+        type: 'standard',
+    }
+} as Meta<typeof SnackBar>
+
+type Story = StoryObj<StoryProps>
+
+export const Standard: Story = {
+    render: (args) => (
+        <SnackBar {...args}/>
+    ),
+    args: {
+        message: 'Something happened',
+        title: 'Heyo'
+    },
+}
