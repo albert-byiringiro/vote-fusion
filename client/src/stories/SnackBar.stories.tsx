@@ -38,3 +38,14 @@ export const Error: Story = {
         type: 'error',
     }
 }
+
+export const AutoClose: Story = {
+    render: (args) => (
+        <SnackBar {...args} />
+    ),
+    args: {
+        message: 'Something happened',
+        title: 'Heyo',
+        autoCloseDuration: 2000
+    }
+}
