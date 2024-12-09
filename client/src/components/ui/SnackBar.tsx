@@ -19,14 +19,14 @@ const snackBarStyles = {
   error: 'bg-red-600 text-white',
 };
 
-const SnackBar: React.FC<SnackBarProps> = ({
+const SnackBar = ({
   type = 'standard',
   title,
   message,
   show,
   onClose,
   autoCloseDuration,
-}) => {
+}: SnackBarProps) => {
   const outerStyles = snackBarStyles[type];
   const [showSnackBar, setShowSnackBar] = useState(false);
 
