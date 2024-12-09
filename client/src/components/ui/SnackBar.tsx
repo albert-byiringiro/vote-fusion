@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import { CSSTransition } from 'react-transition-group';
+
+import styles from './SnackBar.module.css';
+import { MdCancel } from "react-icons/md";
 
 type SnackBarProps = {
     type?: 'standard' | 'error';
@@ -40,4 +44,33 @@ const SnackBar = ({
             autoTimer && clearTimeout(autoTimer)
         }
     }, [show, message, title])
+
+    return (
+        <CSSTransition
+            in={showSnackBar}
+            timeout={300}
+            classNames={{
+                enter: styles.enter,
+                enterActive: styles.enterActive,
+                exit: styles.exit,
+                exitActive: styles.exitActive,
+            }}
+        >
+            <div className={`relative shadow-md py-2 mb-1 z-50 rounded-b-md text-center w-full sm:w-1/2 top-0 left-0 right-0 mx-auto bg-opacity-100 ${outerStyles}`}>
+                <div className="absolute top-0 right-0">
+                    <MdCancel
+                        className="fill-current mr-1 mt-1 cursor-pointer hover:opacity-80"
+                        onClick={() => handleCloseSnackBar()}
+                        size={24}
+                    />
+                </div>
+                <div className="mt-4 mx-8 mb-2">
+                    { title && <h3 className="font-semibold">{title}</h3> }
+                    <div className="text-sm font-light italic">{message}</div>
+                </div>
+            </div>
+        </CSSTransition>
+    )
 }
+
+export default SnackBar
