@@ -8,4 +8,14 @@ export const colorizeText = (text: string): JSX.Element[] => text.split('').map(
             {val}
         </span>
     )
-});
+})
+
+
+type TokenPayload = {
+    iat: number;
+    exp: number;
+    sub: string;
+    name: string;
+    pollID: string;
+}
+
