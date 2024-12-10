@@ -10,14 +10,14 @@ type ParticipantListProps = {
   onRemoveParticipant: (id: string) => void;
 } & BottomSheetProps;
 
-const ParticipantList: React.FC<ParticipantListProps> = ({
+const ParticipantList = ({
   isOpen,
   onClose,
   participants = {},
   onRemoveParticipant,
   userID,
   isAdmin,
-}): JSX.Element => (
+}: ParticipantListProps): JSX.Element => (
   <BottomSheet isOpen={isOpen} onClose={onClose}>
     <div className="px-8 flex flex-wrap justify-center mb-2">
       {Object.entries(participants).map(([id, participant]) => (
