@@ -1,13 +1,11 @@
-import Join from './pages/Join';
+import { devtools } from "valtio/utils"
 
-export default function App() {
+import './index.css'
+import Pages from "./Pages";
+import { state } from "./state";
 
-  return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-      <Join/>
-    </>
-  );
-}
+devtools(state, 'app state')
+const App: React.FC = () => <Pages/>
+
+
+export default App
