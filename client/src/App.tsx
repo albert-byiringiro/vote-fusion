@@ -1,4 +1,4 @@
-import Welcome from './pages/Welcome';
+import Join from './pages/Join';
 
 export default function App() {
 
@@ -7,7 +7,7 @@ export default function App() {
       <h1 className="text-3xl font-bold underline">
         Hello world!
       </h1>
-      <Welcome/>
+      <Join/>
     </>
   );
 }
