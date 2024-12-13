@@ -9,8 +9,8 @@ const Create: React.FC = () => {
     <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
       <div className="mb-12">
         <h3 className="text-center">Enter Poll Topic</h3>
-        <div className="">
-          <input type="text" className="" maxLength={100} />
+        <div className="text-center w-full">
+          <input type="text" className="box info w-full" maxLength={100} onChange={(e) => setPollTopic(e.target.value)} />
         </div>
       </div>
     </div>
