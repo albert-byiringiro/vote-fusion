@@ -2,5 +2,5 @@ const baseApiUrl = `http://${import.meta.env.VITE_API_HOST}:${import.meta.env.VI
 
 interface APIError {
     messages: string[];
-    statusCode: number;
+    statusCode?: number;
 }
