@@ -35,7 +35,7 @@ const Create: React.FC = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center items-center">
-        <button className="box btn-orange w-32 my-2" onClick={() => console.log('createPoll')} disabled={false}>Create</button>
+        <button className="box btn-orange w-32 my-2" onClick={() => console.log('createPoll')} disabled={!areFieldsValid()}>Create</button>
         <button className="box btn-purple w-32 my-2" onClick={() => console.log('starting over')}>Start Over</button>
       </div>
     </div>
