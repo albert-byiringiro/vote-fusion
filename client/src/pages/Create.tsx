@@ -6,6 +6,22 @@ const Create: React.FC = () => {
   const [maxVotes, setMaxVotes] = useState(3)
   const [name, setName] = useState('')
 
+  const areFieldsValid = (): boolean => {
+    if (pollTopic.length < 1 || pollTopic.length > 100) {
+      return false
+    }
+
+    if (maxVotes < 1 || maxVotes > 5) {
+      return false
+    }
+
+    if (name.length < 1 || name.length > 25) {
+      return false
+    }
+
+    return true;
+  }
+
   return (
     <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
       <div className="mb-12">
