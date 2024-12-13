@@ -6,6 +6,7 @@ const Create: React.FC = () => {
   const [pollTopic, setPollTopic] = useState('')
   const [maxVotes, setMaxVotes] = useState(3)
   const [name, setName] = useState('')
+  const [apiError, setApiError] = useState('')
 
   const areFieldsValid = (): boolean => {
     if (pollTopic.length < 1 || pollTopic.length > 100) {
@@ -25,6 +26,7 @@ const Create: React.FC = () => {
 
   const handleCreatePoll = async () => {
     actions.startLoading()
+    setApiError('')
   }
 
   return (
