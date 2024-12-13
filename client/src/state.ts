@@ -7,10 +7,12 @@ export enum AppPage {
 }
 
 export type AppState = {
+    isLoading: boolean,
     currentPage: AppPage;
 }
 
 const state: AppState = proxy({
+    isLoading: false,
     currentPage: AppPage.Welcome,
 })
 
@@ -20,6 +22,9 @@ const actions = {
     },
     startOver: (): void => {
         actions.setPage(AppPage.Welcome)
+    },
+    startLoading: (): void => {
+        state.isLoading = true
     }
 }
 
