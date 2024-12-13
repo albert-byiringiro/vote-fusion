@@ -17,6 +17,9 @@ const state: AppState = proxy({
 const actions = {
     setPage: (page: AppPage): void => {
         state.currentPage = page
+    },
+    startOver: (): void => {
+        actions.setPage(AppPage.Welcome)
     }
 }
 
