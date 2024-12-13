@@ -18,6 +18,9 @@ const Create: React.FC = () => {
           <CountSelector min={1} max={5} initial={3} step={1} onChange={(val) => setMaxVotes(val)}/>
         </div>
       </div>
+      <div className="flex flex-col justify-center items-center">
+        <button className="box btn-orange w-32 my-2" onClick={() => console.log('createPoll')} disabled={false}>Create</button>
+      </div>
     </div>
   )
 }
