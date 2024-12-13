@@ -25,6 +25,9 @@ const actions = {
     },
     startLoading: (): void => {
         state.isLoading = true
+    },
+    stopLoading: (): void => {
+        state.isLoading = false
     }
 }
 
