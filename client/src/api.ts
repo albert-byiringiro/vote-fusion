@@ -4,3 +4,8 @@ interface APIError {
     messages: string[];
     statusCode?: number;
 }
+
+interface MakeRequestResponse<T> {
+    data: T | Record<string, never>;
+    error?: APIError;
+}
