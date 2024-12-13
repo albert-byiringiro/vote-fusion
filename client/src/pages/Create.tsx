@@ -69,6 +69,9 @@ const Create: React.FC = () => {
           <CountSelector min={1} max={5} initial={3} step={1} onChange={(val) => setMaxVotes(val)}/>
         </div>
       </div>
+      {apiError && (
+        <p className="text-center text-red-600 font-light mt-8">{apiError}</p>
+      )}
       <div className="flex flex-col justify-center items-center">
         <button className="box btn-orange w-32 my-2" onClick={() => console.log('createPoll')} disabled={!areFieldsValid()}>Create</button>
         <button className="box btn-purple w-32 my-2" onClick={() => actions.startOver()}>Start Over</button>
