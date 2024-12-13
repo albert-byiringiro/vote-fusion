@@ -1,5 +1,6 @@
 import { useState } from "react"
 import CountSelector from "../components/ui/CountSelector"
+import { actions } from "../state"
 
 const Create: React.FC = () => {
   const [pollTopic, setPollTopic] = useState('')
@@ -36,7 +37,7 @@ const Create: React.FC = () => {
       </div>
       <div className="flex flex-col justify-center items-center">
         <button className="box btn-orange w-32 my-2" onClick={() => console.log('createPoll')} disabled={!areFieldsValid()}>Create</button>
-        <button className="box btn-purple w-32 my-2" onClick={() => console.log('starting over')}>Start Over</button>
+        <button className="box btn-purple w-32 my-2" onClick={() => actions.startOver()}>Start Over</button>
       </div>
     </div>
   )
