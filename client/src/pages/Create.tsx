@@ -49,8 +49,12 @@ const Create: React.FC = () => {
       setApiError('Name and poll topic are both required!')
     } else if (error && error.statusCode !== 400) {
       setApiError(error.messages[0])
-    } 
+    } else {
+      actions.initializePoll(data.poll)
+      actions.setPollAccessToken(data.accessToken)
+    }
     
+    actions.stopLoading()
   }
 
   return (
