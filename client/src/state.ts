@@ -10,7 +10,8 @@ export enum AppPage {
 export type AppState = {
     isLoading: boolean,
     currentPage: AppPage;
-    poll?: Poll
+    poll?: Poll,
+    accessToken?: string
 }
 
 const state: AppState = proxy({
@@ -33,6 +34,9 @@ const actions = {
     },
     initializePoll: (poll?: Poll): void => {
         state.poll = poll
+    },
+    setPollAccessToken: (token?: string): void => {
+        state.accessToken = token
     }
 }
 
