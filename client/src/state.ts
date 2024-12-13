@@ -1,4 +1,5 @@
 import { proxy } from "valtio";
+import { Poll } from "../../shared/poll-types";
 
 export enum AppPage {
     Welcome = 'welcome',
@@ -9,6 +10,7 @@ export enum AppPage {
 export type AppState = {
     isLoading: boolean,
     currentPage: AppPage;
+    poll?: Poll
 }
 
 const state: AppState = proxy({
@@ -28,6 +30,9 @@ const actions = {
     },
     stopLoading: (): void => {
         state.isLoading = false
+    },
+    initializePoll: (poll?: Poll): void => {
+        state.poll = poll
     }
 }
 
