@@ -4,7 +4,8 @@ import { Poll } from "../../shared/poll-types";
 export enum AppPage {
     Welcome = 'welcome',
     Create = 'create',
-    Join = 'join'
+    Join = 'join',
+    WaitingRoom = 'waiting-room',
 }
 
 export type AppState = {
