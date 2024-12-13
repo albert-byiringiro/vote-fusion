@@ -1,6 +1,8 @@
 import { useState } from "react"
 import CountSelector from "../components/ui/CountSelector"
 import { actions } from "../state"
+import { makeRequest } from "../api"
+import { Poll } from "../../../shared/poll-types"
 
 const Create: React.FC = () => {
   const [pollTopic, setPollTopic] = useState('')
@@ -27,6 +29,28 @@ const Create: React.FC = () => {
   const handleCreatePoll = async () => {
     actions.startLoading()
     setApiError('')
+
+    const { data, error } = await makeRequest<{
+      poll: Poll;
+      accessToken: string;
+    }>('/polls', {
+      method: 'POST',
+      body: JSON.stringify({
+        topic: pollTopic,
+        votesPerVoter: maxVotes,
+        name,
+      })
+    })
+
+    console.log(data, error);
+
+    if (error && error.statusCode === 400) {
+      console.log('400 error', error);
+      setApiError('Name and poll topic are both required!')
+    } else if (error && error.statusCode !== 400) {
+      setApiError(error.messages[0])
+    } 
+    
   }
 
   return (
