@@ -23,6 +23,10 @@ const Create: React.FC = () => {
     return true;
   }
 
+  const handleCreatePoll = async () => {
+    actions.startLoading()
+  }
+
   return (
     <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
       <div className="mb-12">
