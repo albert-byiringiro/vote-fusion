@@ -40,6 +40,11 @@ export const createSocketWithHandlers = ({
         actions.stopLoading()
     })
 
+    socket.on('exception', (exception) => {
+        console.log('WS exception: ', exception);
+        actions.addWsError(exception)
+    })
+
     socket.on('poll_updated', (poll) => {
         console.log('event: "poll_updated" received', poll);
         actions.updatePoll(poll)
