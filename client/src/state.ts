@@ -17,18 +17,29 @@ type Me = {
     name: string;
 }
 
+type WsError = {
+    type: string;
+    message: string;
+}
+
+type WsErrorUnique = WsError & {
+    id: string;
+}
+
 export type AppState = {
     isLoading: boolean;
     me?: Me;
     currentPage: AppPage;
     poll?: Poll;
     accessToken?: string;
-    socket?: Socket
+    socket?: Socket;
+    wsError: WsErrorUnique[];
 }
 
 const state: AppState = proxy({
     isLoading: false,
     currentPage: AppPage.Welcome,
+    wsError: [],
 })
 
 const stateWithComputed: AppState = derive(
