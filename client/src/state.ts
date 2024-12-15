@@ -118,6 +118,9 @@ const actions = {
     },
     removeWsError: (id: string): void => {
         state.wsErrors = state.wsErrors.filter((error) => error.id !== id)
+    },
+    nominateEvent: (text: string): void => {
+        state.socket?.emit('nominate', { text })
     }
 }
 
