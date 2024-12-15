@@ -23,10 +23,17 @@ const Join: React.FC = () => {
     return (
         <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
             <div className="mb-12">
-                <div className="">
+                <div className="my-4">
                 <h3 className="text-center">Enter Code Provided by &quot;Friend&quot;</h3>
-                <div className="">
-                    <input type="text" className="box info w-full" />
+                <div className="text-center w-full">
+                    <input 
+                        type="text" 
+                        className="box info w-full"
+                        maxLength={6}
+                        onChange={(e) => setPollID(e.target.value.toUpperCase())}
+                        autoCapitalize="characters"
+                        style={{ textTransform: 'uppercase'}}
+                    />
                 </div>
                 </div>
                 <div className="my-4">
