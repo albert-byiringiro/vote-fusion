@@ -1,0 +1,1 @@
+export const socketIOUrl =  `http://${import.meta.env.VITE_API_HOST}:${import.meta.env.VITE_API_PORT}/${import.meta.env.VITE_POLLS_NAMESPACE}`
