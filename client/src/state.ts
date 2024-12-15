@@ -115,6 +115,9 @@ const actions = {
                 id: nanoid(6),
             },
         ];
+    },
+    removeWsError: (id: string): void => {
+        state.wsErrors = state.wsErrors.filter((error) => error.id !== id)
     }
 }
 
