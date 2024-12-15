@@ -29,6 +29,12 @@ export const createSocketWithHandlers = ({
         actions.stopLoading()
     })
 
+    socket.on('connect_error', () => {
+        console.log("Failed to connect socket")
+
+        actions.stopLoading()
+    })
+
     socket.on('poll_updated', (poll) => {
         console.log('event: "poll_updated" received', poll);
         actions.updatePoll(poll)
