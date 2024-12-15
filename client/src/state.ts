@@ -127,6 +127,9 @@ const actions = {
     removeNomination: (id: string): void => {
         state.socket?.emit('remove_nomination', { id })
     },
+    removeParticipant: (id: string): void => {
+        state.socket?.emit('remove_participant', { id })
+    },
     reset: (): void => {
         state.socket?.disconnect();
         state.poll = undefined;
