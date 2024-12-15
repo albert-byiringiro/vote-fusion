@@ -91,6 +91,9 @@ const actions = {
         } else {
             state.socket.connect()
         }
+    },
+    updatePoll: (poll: Poll): void => {
+        state.poll = poll
     }
 }
 
