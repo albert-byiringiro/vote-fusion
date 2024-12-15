@@ -106,6 +106,9 @@ const actions = {
             state.socket.connect()
         }
     },
+    startVote: (): void => {
+        state.socket?.emit('start_vote')
+    },
     updatePoll: (poll: Poll): void => {
         state.poll = poll
     },
