@@ -2,6 +2,7 @@ import { proxy } from "valtio";
 import { Poll } from "../../shared/poll-types";
 import { derive, subscribeKey } from "valtio/utils";
 import { getTokenPayload } from "./utils";
+import { Socket } from "socket.io-client";
 
 export enum AppPage {
     Welcome = 'welcome',
@@ -21,6 +22,7 @@ export type AppState = {
     currentPage: AppPage;
     poll?: Poll;
     accessToken?: string;
+    socket?: Socket
 }
 
 const state: AppState = proxy({
