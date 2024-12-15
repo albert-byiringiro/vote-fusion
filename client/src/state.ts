@@ -44,7 +44,13 @@ const stateWithComputed: AppState = derive(
             name: token.name
         }
     },
-    
+    isAdmin: (get) => {
+        if (!get(state).me) {
+            return false
+        }
+
+        return get(state).me?.id === get(state).poll?.adminID
+    }
     },
     {
         proxy: state
