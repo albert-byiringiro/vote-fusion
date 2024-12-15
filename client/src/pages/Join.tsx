@@ -1,5 +1,7 @@
 import { useState } from "react"
-import { actions } from "../state"
+import { actions, AppPage } from "../state"
+import { makeRequest } from "../api"
+import { Poll } from "../../../shared/poll-types"
 
 const Join: React.FC = () => {
     const [pollID, setPollID] = useState('')
@@ -18,7 +20,33 @@ const Join: React.FC = () => {
         return true
     }
 
-    const handleJoinPoll = () => console.log('Joined the poll')
+    const handleJoinPoll = async () => {
+        actions.startLoading()
+        setApiError('')
+
+        const {data, error } = await makeRequest<{
+            poll: Poll;
+            accessToken: string;
+        }>('/polls/join', {
+            method: 'POST',
+            body: JSON.stringify({
+                pollID,
+                name,
+            })
+        })
+
+        if (error && error.statusCode === 400) {
+            setApiError('Please make sure to include a poll topic!')
+        } else if (error && !error.statusCode) {
+            setApiError('Unknown API error')
+        } else {
+            actions.initializePoll(data.poll)
+            actions.setPollAccessToken(data.accessToken)
+            actions.setPage(AppPage.WaitingRoom)
+        }
+
+        actions.stopLoading()
+    }
 
     return (
         <div className="flex flex-col w-full justify-around items-stretch h-full mx-auto max-w-sm">
@@ -56,7 +84,7 @@ const Join: React.FC = () => {
                 <button 
                     disabled={!areFieldsValid()}
                     className="box btn-orange w-32 my-2"
-                    onClick={() => console.log('Joined the poll')}
+                    onClick={handleJoinPoll}
                 >Join</button>
                 <button 
                     className="box btn-purple w-32 my-2"
