@@ -77,7 +77,9 @@ const actions = {
         state.currentPage = page
     },
     startOver: (): void => {
-        actions.setPage(AppPage.Welcome)
+        actions.reset();
+        localStorage.removeItem('accessToken');
+        actions.setPage(AppPage.Welcome);
     },
     startLoading: (): void => {
         state.isLoading = true
