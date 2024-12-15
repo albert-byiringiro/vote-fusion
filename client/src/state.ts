@@ -88,4 +88,6 @@ subscribeKey(state, 'accessToken', () => {
     }
 })
 
+export type AppActions = typeof actions
+
 export { stateWithComputed as state, actions }
