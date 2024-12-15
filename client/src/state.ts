@@ -14,10 +14,11 @@ type Me = {
 }
 
 export type AppState = {
-    isLoading: boolean,
+    isLoading: boolean;
+    me?: Me;
     currentPage: AppPage;
-    poll?: Poll,
-    accessToken?: string
+    poll?: Poll;
+    accessToken?: string;
 }
 
 const state: AppState = proxy({
