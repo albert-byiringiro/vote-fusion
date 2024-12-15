@@ -8,6 +8,11 @@ export enum AppPage {
     WaitingRoom = 'waiting-room',
 }
 
+type Me = {
+    id: string;
+    name: string;
+}
+
 export type AppState = {
     isLoading: boolean,
     currentPage: AppPage;
