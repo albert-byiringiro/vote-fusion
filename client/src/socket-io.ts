@@ -27,5 +27,10 @@ export const createSocketWithHandlers = ({
         console.log(`Connected with socket ID: ${socket.id}. UserID: ${state.me?.id} will join room ${state.poll?.id}`)
     })
 
+    socket.on('poll_updated', (poll) => {
+        console.log('event: "poll_updated" received', poll);
+        actions.updatePoll(poll)
+    })
+
     return socket
 }
