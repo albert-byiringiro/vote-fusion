@@ -1,5 +1,7 @@
 import { proxy } from "valtio";
 import { Poll } from "../../shared/poll-types";
+import { derive } from "valtio/utils";
+import { getTokenPayload } from "./utils";
 
 export enum AppPage {
     Welcome = 'welcome',
@@ -26,6 +28,29 @@ const state: AppState = proxy({
     currentPage: AppPage.Welcome,
 })
 
+const stateWithComputed: AppState = derive(
+    {
+    me: (get) => {
+        const accessToken = get(state).accessToken;
+
+        if (!accessToken) {
+            return;
+        }
+
+        const token = getTokenPayload(accessToken)
+
+        return {
+            id: token.sub,
+            name: token.name
+        }
+    },
+    
+    },
+    {
+        proxy: state
+    }
+)
+
 const actions = {
     setPage: (page: AppPage): void => {
         state.currentPage = page
@@ -47,4 +72,4 @@ const actions = {
     }
 }
 
-export { state, actions }
+export { stateWithComputed as state, actions }
