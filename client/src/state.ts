@@ -121,6 +121,14 @@ const actions = {
     },
     nominateEvent: (text: string): void => {
         state.socket?.emit('nominate', { text })
+    },
+    reset: (): void => {
+        state.socket?.disconnect();
+        state.poll = undefined;
+        state.accessToken = undefined;
+        state.isLoading = false;
+        state.socket = undefined;
+        state.wsErrors = [];
     }
 }
 
