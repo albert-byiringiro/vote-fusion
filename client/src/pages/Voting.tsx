@@ -21,6 +21,12 @@ export const Voting = () => {
         ])
       }
     }
+
+    const getRank = (id: string) => {
+      const position = rankings.findIndex((ranking) => ranking === id)
+
+      return position < 0 ? undefined : position + 1;
+    }
     
   return (
     <div className="mx-auto flex flex-col w-full justify-between items-center h-full max-w-sm">
