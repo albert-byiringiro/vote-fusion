@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import { getTokenPayload } from "./utils";
 import SnackBar from "./components/ui/SnackBar";
 
-devtools(state, 'app state')
+devtools(state, { name: 'app state'})
 const App: React.FC = () => {
     const currentState = useSnapshot(state)
 
