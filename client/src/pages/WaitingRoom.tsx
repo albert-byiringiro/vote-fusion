@@ -115,7 +115,8 @@ export const WaitingRoom: React.FC = () => {
               participants={currentState.poll?.participants}
               onRemoveParticipant={confirmRemoveParticipant}
               isAdmin={currentState.isAdmin || false}
-              userID={currentState.me?.id} children={undefined}      />
+              userID={currentState.me?.id} children={undefined}      
+        />
       <NominationForm
               title={currentState.poll?.topic}
               isOpen={isNominationFormOpen}
@@ -124,7 +125,8 @@ export const WaitingRoom: React.FC = () => {
               nominations={currentState.poll?.nominations}
               userID={currentState.me?.id}
               onRemoveNomination={(nominationID) => actions.removeNomination(nominationID)}
-              isAdmin={currentState.isAdmin || false} children={undefined}      />
+              isAdmin={currentState.isAdmin || false} children={undefined}      
+        />
       <ConfirmationDialog
         showDialog={isConfirmationOpen}
         message={confirmationMessage}
