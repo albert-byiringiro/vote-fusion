@@ -21,6 +21,11 @@ export const WaitingRoom = () => {
         setIsConfirmationOpen(true)
     }
 
+    const submitRemoveParticipant = () => {
+        participantToRemove && actions.removeParticipant(participantToRemove)
+        setIsConfirmationOpen(false)
+    }
+
     useEffect(()=> {
         console.log('Waiting room useEffect')
         actions.initializeSocket()
