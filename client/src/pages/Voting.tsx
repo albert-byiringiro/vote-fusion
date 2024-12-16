@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useSnapshot } from "valtio"
 import { state } from "../state"
+import RankedCheckBox from "../components/ui/RankedCheckBox"
 
 export const Voting = () => {
     const currentState = useSnapshot(state)
@@ -44,6 +45,11 @@ export const Voting = () => {
               </div>
             </>
           )}
+        </div>
+        <div className="px-2">
+          {Object.entries(currentState.poll?.nominations || {}).map(([id, nomination]) => (
+            <RankedCheckBox value={nomination.text} rank={getRank(id)} onSelect={() => toggleNomination(id)}/>
+          ))}
         </div>
     </div>
   )
