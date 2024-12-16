@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
-import { actions } from "../state"
+import { actions, state } from "../state"
 import { useCopyToClipboard } from "react-use"
+import { useSnapshot } from "valtio"
 
 export const WaitingRoom = () => {
 
@@ -11,6 +12,8 @@ export const WaitingRoom = () => {
     const [confirmationMessage, setIsConfirmationMessage] = useState('')
     const [participantToRemove, setParticipantToRemove] = useState<string>()
     const [showConfirmation, setShowConfirmation] = useState(false)
+
+    const currentState = useSnapshot(state)
 
     useEffect(()=> {
         console.log('Waiting room useEffect')
