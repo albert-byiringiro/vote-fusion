@@ -1,7 +1,8 @@
 import { useState } from "react"
 import { useSnapshot } from "valtio"
-import { state } from "../state"
+import { actions, state } from "../state"
 import RankedCheckBox from "../components/ui/RankedCheckBox"
+import ConfirmationDialog from "../components/ui/ConfirmationDialog"
 
 export const Voting = () => {
     const currentState = useSnapshot(state)
@@ -45,11 +46,39 @@ export const Voting = () => {
               </div>
             </>
           )}
+          <div className="px-2">
+            {Object.entries(currentState.poll?.nominations || {}).map(([id, nomination]) => (
+              <RankedCheckBox value={nomination.text} rank={getRank(id)} onSelect={() => toggleNomination(id)}/>
+            ))}
+          </div>
         </div>
-        <div className="px-2">
-          {Object.entries(currentState.poll?.nominations || {}).map(([id, nomination]) => (
-            <RankedCheckBox value={nomination.text} rank={getRank(id)} onSelect={() => toggleNomination(id)}/>
-          ))}
+        <div className="mx-auto flex flex-col items-center">
+          <button 
+            disabled={rankings.length < (currentState.poll?.votesPerVoter ?? 100)}
+            className="box btn-purple my-2 w-36"
+            onClick={() => setConfirmVotes(true)}
+          >
+            Submit votes
+          </button>
+          <ConfirmationDialog 
+            message={"You cannot change your vote after submitting."} 
+            showDialog={confirmVotes} 
+            onCancel={() => setConfirmVotes(false)} 
+            onConfirm={() => actions.submitRankings(rankings)}
+          />
+          <>
+            <button 
+              className="box btn-orange my-2 w-36"
+            >
+              Cancel Poll
+            </button>
+            <ConfirmationDialog 
+              message="This will cancel the poll and remove all users."
+              showDialog={confirmCancel}
+              onCancel={() => setConfirmCancel(false)}
+              onConfirm={() => actions.cancelPoll()}
+            />
+          </>
         </div>
     </div>
   )
