@@ -36,6 +36,9 @@ export type AppState = {
     wsErrors: WsErrorUnique[];
     me?: Me;
     isAdmin: boolean;
+    nominationCount: number;
+    participantCount: number;
+    canStartVote: boolean;
 }
 
 const state = proxy<AppState>({
