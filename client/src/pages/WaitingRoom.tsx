@@ -37,6 +37,7 @@ export const WaitingRoom: React.FC = () => {
     console.log('Waiting room useEffect');
     actions.initializeSocket();
   }, []);
+  
   return (
     <>
       <div className="flex flex-col w-full justify-between items-center h-full">
