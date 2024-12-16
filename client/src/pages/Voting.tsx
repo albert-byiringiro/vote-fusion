@@ -7,6 +7,20 @@ export const Voting = () => {
     const [rankings, setRankings] = useState<string[]>([])
     const [confirmCancel, setConfirmCancel] = useState(false)
     const [confirmVotes, setConfirmVotes] = useState(false)
+
+    const toggleNomination = (id: string) => {
+      const position = rankings.findIndex((ranking) => ranking === id);
+      const hasVotesRemaining = (currentState.poll?.votesPerVoter || 0) - rankings.length > 0
+
+      if (position < 0 && hasVotesRemaining) {
+        setRankings([...rankings, id])
+      } else {
+        setRankings([
+          ...rankings.slice(0, position),
+          ...rankings.slice(position + 1, rankings.length),
+        ])
+      }
+    }
     
   return (
     <div className="mx-auto flex flex-col w-full justify-between items-center h-full max-w-sm">
