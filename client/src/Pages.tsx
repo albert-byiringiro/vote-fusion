@@ -27,6 +27,10 @@ const Pages: React.FC = () => {
         ) {
             actions.setPage(AppPage.WaitingRoom)
         }
+
+        if (currentState.me?.id && currentState.poll?.hasStarted) {
+            actions.setPage(AppPage.Voting)
+        }
     }, [currentState.me?.id, currentState.poll?.hasStarted])
 
     return (
