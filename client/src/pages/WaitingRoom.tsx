@@ -3,7 +3,8 @@ import { actions, state } from "../state"
 import { useCopyToClipboard } from "react-use"
 import { useSnapshot } from "valtio"
 import { colorizeText } from "../utils"
-import { MdContentCopy } from "react-icons/md"
+import { MdContentCopy, MdPeopleOutline } from "react-icons/md"
+import { BsPencilSquare } from "react-icons/bs"
 
 export const WaitingRoom = () => {
 
@@ -47,6 +48,16 @@ export const WaitingRoom = () => {
                         </div>
                         <MdContentCopy size={24}/>
                     </div>
+                </div>
+                <div className="flex justify-center">
+                    <button className="box btn-orange mx-2 pulsate" onClick={() => setIsParticipantListOpen(true)}>
+                        <MdPeopleOutline size={24}/>
+                        <span>{currentState.participantCount}</span>
+                    </button>
+                    <button className="box btn-purple mx-2 pulsate" onClick={() => setIsNominationFormOpen(true)}>
+                        <BsPencilSquare size={24}/>
+                        <span>{currentState.nominationCount}</span>
+                    </button>
                 </div>
             </div>
         </>
