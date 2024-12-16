@@ -15,6 +15,12 @@ export const WaitingRoom = () => {
 
     const currentState = useSnapshot(state)
 
+    const confirmRemoveParticipant = (id: string) => {
+        setIsConfirmationMessage(`Remove ${currentState.poll?.participants[id]}`)
+        setParticipantToRemove(id)
+        setIsConfirmationOpen(true)
+    }
+
     useEffect(()=> {
         console.log('Waiting room useEffect')
         actions.initializeSocket()
