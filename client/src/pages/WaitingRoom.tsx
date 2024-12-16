@@ -9,6 +9,7 @@ export const WaitingRoom = () => {
     const [isNominationFormOpen, setIsNominationFormOpen] = useState(false)
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false)
     const [confirmationMessage, setIsConfirmationMessage] = useState('')
+    const [participantToRemove, setParticipantToRemove] = useState<string>()
 
     useEffect(()=> {
         console.log('Waiting room useEffect')
