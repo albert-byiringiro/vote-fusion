@@ -1,7 +1,10 @@
 import { useEffect } from "react"
 import { actions } from "../state"
+import { useCopyToClipboard } from "react-use"
 
 export const WaitingRoom = () => {
+
+    const [_copiedText, copyToClipBoard] = useCopyToClipboard()
 
     useEffect(()=> {
         console.log('Waiting room useEffect')
