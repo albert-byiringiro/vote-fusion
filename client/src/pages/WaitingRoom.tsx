@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import { actions, state } from "../state"
 import { useCopyToClipboard } from "react-use"
 import { useSnapshot } from "valtio"
+import { colorizeText } from "../utils"
+import { MdContentCopy } from "react-icons/md"
 
 export const WaitingRoom = () => {
 
@@ -32,8 +34,21 @@ export const WaitingRoom = () => {
     }, [])
 
     return (
-        <div className="flex flex-col w-full justify-between h-full">
-            <h3>Waiting Room</h3>
-        </div>
+        <>
+            <div className="flex flex-col w-full justify-between h-full">
+                <div>
+                    <h2 className="text-center">Poll Topic</h2>
+                    <p className="italic text-center mb-4">{currentState.poll?.topic}</p>
+                    <h2 className="text-center">Poll ID</h2>
+                    <h3 className="text-center">Click to copy!</h3>
+                    <div className="mb-4 flex justify-center align-middle cursor-pointer" onClick={() => copyToClipBoard(currentState.poll?.id || '')}>
+                        <div className="font-extrabold text-center mr-2">
+                            {currentState.poll && colorizeText(currentState.poll?.id)}
+                        </div>
+                        <MdContentCopy size={24}/>
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
