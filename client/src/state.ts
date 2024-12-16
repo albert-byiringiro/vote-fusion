@@ -110,9 +110,16 @@ const actions = {
                     actions
                 })
             )
-        } else {
-            state.socket.connect()
+
+            return
         }
+
+        if (!state.socket.connected) {
+            state.socket.connect()
+            return
+        }
+
+        actions.stopLoading()
     },
     startVote: (): void => {
         state.socket?.emit('start_vote')
