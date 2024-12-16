@@ -1,10 +1,11 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { actions } from "../state"
 import { useCopyToClipboard } from "react-use"
 
 export const WaitingRoom = () => {
 
     const [_copiedText, copyToClipBoard] = useCopyToClipboard()
+    const [isParticipantListOpen, setIsParticipantListOpen] = useState(false)
 
     useEffect(()=> {
         console.log('Waiting room useEffect')
