@@ -6,6 +6,7 @@ export const WaitingRoom = () => {
 
     const [_copiedText, copyToClipBoard] = useCopyToClipboard()
     const [isParticipantListOpen, setIsParticipantListOpen] = useState(false)
+    const [isNominationFormOpen, setIsNominationFormOpen] = useState(false)
 
     useEffect(()=> {
         console.log('Waiting room useEffect')
