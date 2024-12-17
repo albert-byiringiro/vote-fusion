@@ -64,6 +64,16 @@ export const Results = () => {
                     }}
                 />
             )}
+            {
+                isLeavePollOpen && (
+                    <ConfirmationDialog
+                        message="Are you sure you want to leave the poll? You will lose your votes."
+                        showDialog={isLeavePollOpen}
+                        onCancel={() => setIsLeavePollOpen(false)}
+                        onConfirm={() => actions.startOver()}
+                    />
+                )
+            }
         </>
     )
 }
