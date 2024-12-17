@@ -175,6 +175,9 @@ const actions = {
         state.isLoading = false;
         state.socket = undefined;
         state.wsErrors = [];
+    },
+    closePoll: (): void => {
+        state.socket?.emit('close_poll')
     }
 }
 
