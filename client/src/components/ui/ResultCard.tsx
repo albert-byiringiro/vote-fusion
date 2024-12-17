@@ -11,6 +11,21 @@ const ResultCard: React.FC<ResultCard> = ({ results }) => {
                 <div className="col-span-2 font-semibold">Candidate</div>
                 <div className="font-semibold">Score</div>
             </div>
+            <div className="divide-y-2 overflow-y-auto pr-4">
+                {
+                    results.map((result) => (
+                        <div 
+                            key={result.nominationID}
+                            className="grid grid-cols-3 gap-4 my-1 items-center"                      
+                        >
+                            <div className="col-span-2">{result.nominationText}</div>
+                            <div className="col-span-1 text-right">{result.score.toFixed(2)}</div>
+                        </div>
+                    ))
+                }
+            </div>
         </>
     )
 }
+
+export default ResultCard
