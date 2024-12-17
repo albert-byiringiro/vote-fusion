@@ -29,7 +29,7 @@ export default (
     }))
 
     // 3. Sort values by score in descending order
-    results.sort((res1, res2) => res1.score - res2.score)
+    results.sort((res1, res2) => res2.score - res1.score)
 
     return results
 }
