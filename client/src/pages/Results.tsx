@@ -1,7 +1,8 @@
 import { useSnapshot } from "valtio"
-import { state } from "../state"
+import { actions, state } from "../state"
 import { useState } from "react"
 import ResultCard from "../components/ui/ResultCard"
+import ConfirmationDialog from "../components/ui/ConfirmationDialog"
 
 export const Results = () => {
 
@@ -52,6 +53,17 @@ export const Results = () => {
                     }
                 </div>
             </div>
+            {isAdmin && (
+                <ConfirmationDialog
+                    message="Are you sure you want to end the poll?"
+                    showDialog={isConfirmationOpen}
+                    onCancel={() => setIsConfirmationOpen(false)}
+                    onConfirm={() => {
+                        actions.closePoll()
+                        setIsConfirmationOpen(false)
+                    }}
+                />
+            )}
         </>
     )
 }
