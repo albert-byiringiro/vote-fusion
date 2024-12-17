@@ -55,7 +55,7 @@ export const Results = () => {
             </div>
             {isAdmin && (
                 <ConfirmationDialog
-                    message="Are you sure you want to end the poll?"
+                    message="Are you sure you want to close the poll and calculate the results?"
                     showDialog={isConfirmationOpen}
                     onCancel={() => setIsConfirmationOpen(false)}
                     onConfirm={() => {
