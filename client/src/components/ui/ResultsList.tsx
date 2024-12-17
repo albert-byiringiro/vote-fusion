@@ -17,3 +17,5 @@ const ResultsList = ({ results }: ResultsList) => {
         </div>
     )
 }
+
+export default ResultsList
