@@ -45,6 +45,11 @@ export const Results = () => {
                             </div>
                         )
                     }
+                    {
+                        !!poll?.results.length && (
+                            <button className="box btn-purple my-2" onClick={() => setIsLeavePollOpen(true)}>Leave Poll</button>
+                        )
+                    }
                 </div>
             </div>
         </>
