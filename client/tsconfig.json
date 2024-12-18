@@ -15,12 +15,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx", // Use the new JSX transform if applicable
-    "types": ["node"],
+    "noImplicitAny": false,
+    "types": ["node", "vite/client", "@storybook/types"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "vite-env.d.ts"],
+  "include": ["src", "vite-env.d.ts", "src/**/*.stories.tsx"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
