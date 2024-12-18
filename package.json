@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "docker:compose": "docker-compose up -d",
+    "client:dev": "npm run dev --workspace=client",
+    "server:dev": "wait-on tcp:6379 && npm run dev --workspace=server",
     "stop": "docker-compose down",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
