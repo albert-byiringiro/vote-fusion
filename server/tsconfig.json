@@ -18,7 +18,9 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@nestjs/common": ["@nestjs/common/"]
+      "@nestjs/common": ["@nestjs/common/"],
+      "shared": ["../shared/dist"],
+      "shared/*": ["../shared/dist/*"]
     }
   }
 }
