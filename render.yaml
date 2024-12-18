@@ -22,10 +22,11 @@ services:
     ipAllowList: []
     plan: free
 
-  - type: static-site
+  - type: web
     name: votefusion-client
+    env: node
     buildCommand: cd client && npm install && npm run build
-    staticPublishPath: ./client/dist
+    startCommand: cd client && npm run start
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
