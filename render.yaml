@@ -14,8 +14,8 @@ services:
     branch: main
     buildCommand: >
       npm install && cd shared && npm install && npm run build && cd ../server && 
-      npm install -g @nestjs/cli && npm install && npm run build
-    startCommand: cd server && npm run start:prod
+      npm install -g @nestjs/cli && npm install && NODE_PATH=../shared/dist npm run build
+    startCommand: cd server && NODE_PATH=../shared/dist npm run start:prod
     envVars:
       - key: NODE_ENV
         value: production
