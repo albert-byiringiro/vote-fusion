@@ -14,10 +14,16 @@ async function bootstrap() {
 
   app.enableCors({
     origin: [
-      `http://localhost:${clientPort}`,
-      new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`),
-    ]
-  })
+      process.env.NODE_ENV === 'production'
+        ? process.env.CLIENT_URL 
+        : `http://localhost:${clientPort}`,
+            new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`),
+    ],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
+  
 
   app.useWebSocketAdapter(new SocketIOAdapter(app, configService))
 
