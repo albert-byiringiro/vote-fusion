@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/albertbyiringiro/vote-fusion.git"
+    "url": "git+https://github.com/albert-byiringiro/ranker-voting-app.git"
   },
   "keywords": [
     "ts",
@@ -30,6 +30,8 @@
   "author": "Albert Byiringiro",
   "license": "ISC",
   "devDependencies": {
-    "prop-types": "^15.8.1"
+    "concurrently": "^8.2.0",
+    "prop-types": "^15.8.1",
+    "wait-on": "^6.0.1"
   }
 }
