@@ -17,6 +17,10 @@
     "stop": "docker-compose down",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/albertbyiringiro/vote-fusion.git"
+  },
   "keywords": [
     "ts",
     "react",
