@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: votefusion-api
+    env: node
+    buildCommand: cd server && npm install && npm run build
+    startCommand: cd server && npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: votefusion-redis
+          property: host
+      - key: REDIS_PORT
+        value: 6379
+
+  - type: redis
+    name: votefusion-redis
+    ipAllowList: []
+    plan: free
+
+  - type: static
+    name: votefusion-client
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: ./client/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://votefusion-api.onrender.com
