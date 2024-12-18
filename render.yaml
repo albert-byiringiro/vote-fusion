@@ -1,34 +1,52 @@
 services:
+  - type: redis
+    name: votefusion-redis
+    ipAllowList: [] # only allow internal connections
+    plan: free
+    maxmemoryPolicy: noeviction
+    port: 6379
+    region: frankfurt  # Choose the region closest to your users
+
   - type: web
     name: votefusion-api
-    plan: free
     env: node
+    plan: free
+    region: frankfurt
+    branch: main
     buildCommand: cd server && npm install && npm run build
     startCommand: cd server && npm run start:prod
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 3000
+      - key: CLIENT_PORT
+        value: 10000
       - key: REDIS_HOST
         fromService:
           type: redis
           name: votefusion-redis
           property: host
       - key: REDIS_PORT
-        value: 6379
-
-  - type: redis
-    name: votefusion-redis
-    ipAllowList: []
-    plan: free
+        fromService:
+          type: redis
+          name: votefusion-redis
+          property: port
+    dependencies:
+      - votefusion-redis
 
   - type: web
     name: votefusion-client
     env: node
     plan: free
+    region: frankfurt
+    branch: main
     buildCommand: cd client && npm install && npm run build
-    startCommand: cd client && npm run start
+    startCommand: cd client && npm run serve
+    autoDeploy: true
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
+      - key: PORT
+        value: 10000
