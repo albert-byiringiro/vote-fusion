@@ -124,7 +124,7 @@ export class PollsService {
       nominationID: createNominationID(),
       nomination: {
         userID,
-        text,
+        text: text.trim(), // trim the text field to remove leading/trailing whitespace
       },
     });
   }
