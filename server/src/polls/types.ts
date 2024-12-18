@@ -29,7 +29,7 @@ export type AddParticipantFields = {
 export type AddNominationFields = {
   pollID: string;
   userID: string;
-  text: string;
+  nomination: Nomination;
 };
 
 export type SubmitRankingsFields = {
@@ -71,5 +71,14 @@ export type AuthPayload = {
   name: string;
 };
 
-export type RequestWithAuth = Request & AuthPayload;
-export type SocketWithAuth = Socket & AuthPayload;
+export interface RequestWithAuth extends Request {
+  userID: string;
+  pollID: string;
+  name: string;
+}
+
+export interface SocketWithAuth extends Socket {
+  userID: string;
+  pollID: string;
+  name: string;
+}
