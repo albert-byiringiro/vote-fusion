@@ -14,8 +14,9 @@ services:
     branch: main
     buildCommand: >
       npm install && cd shared && npm install && npm run build && cd ../server && 
-      npm install -g @nestjs/cli && npm install && NODE_PATH=../shared/dist npm run build
-    startCommand: cd server && NODE_PATH=../shared/dist npm run start:prod
+      npm install -g @nestjs/cli && npm install && 
+      npm run build -- --path tsconfig.build.json
+    startCommand: cd server && NODE_PATH=../shared/dist node dist/main
     envVars:
       - key: NODE_ENV
         value: production
@@ -33,6 +34,8 @@ services:
           type: redis
           name: votefusion-redis
           property: port
+      - key: TS_NODE_BASEURL
+        value: ./dist
 
   - type: web
     name: votefusion-client
