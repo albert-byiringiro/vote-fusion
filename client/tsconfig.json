@@ -10,12 +10,12 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "strictNullChecks": true,
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx", // Use the new JSX transform if applicable
-    "types": ["vite/client", "node"],
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
