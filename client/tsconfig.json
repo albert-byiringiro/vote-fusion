@@ -23,5 +23,6 @@
     }
   },
   "include": ["src"],
+  "exclude": ["src/stories/**/*", "**/*.stories.tsx", "**/*.stories.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
