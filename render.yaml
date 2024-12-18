@@ -45,7 +45,7 @@ services:
     branch: main
     buildCommand: >
       npm install && cd shared && npm install && npm run build && cd ../client && 
-      npm install && 
+      npm install vite @vitejs/plugin-react --save-dev && 
       npm install --save-dev @types/react-transition-group @types/react @types/react-dom @types/storybook__react @types/jest && 
       rm -rf src/stories && 
       SKIP_PREFLIGHT_CHECK=true NODE_ENV=production npm run build
