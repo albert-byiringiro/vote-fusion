@@ -22,7 +22,7 @@ services:
     ipAllowList: []
     plan: free
 
-  - type: static
+  - type: static-site
     name: votefusion-client
     buildCommand: cd client && npm install && npm run build
     staticPublishPath: ./client/dist
