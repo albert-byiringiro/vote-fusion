@@ -8,13 +8,15 @@
       "allowSyntheticDefaultImports": true,
       "strict": true,
       "forceConsistentCasingInFileNames": true,
-      "module": "ESNext",
+      "module": "CommonJS",
       "strictNullChecks": true,
       "moduleResolution": "Node",
       "resolveJsonModule": true,
       "isolatedModules": true,
-      "noEmit": true,
-      "jsx": "react",
+      "declaration": true,
+      "noEmit": false,
+      "outDir": "./dist",
+      "jsx": "react"
     },
     "include": ["."]
   }
