@@ -45,8 +45,8 @@ services:
     branch: main
     buildCommand: >
       npm install && cd shared && npm install && npm run build && cd ../client && 
-      npm install && npm install --save-dev @types/react-transition-group && 
-      SKIP_PREFLIGHT_CHECK=true npm run build
+      npm install && npm install --save-dev @types/react-transition-group @types/react @types/react-dom @types/jest && 
+      SKIP_PREFLIGHT_CHECK=true NODE_ENV=production npm run build
     startCommand: cd client && npm run serve
     envVars:
       - key: VITE_API_URL
