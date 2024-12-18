@@ -25,9 +25,10 @@ services:
 
   - type: web
     name: votefusion-client
+    env: node
     plan: free
     buildCommand: cd client && npm install && npm run build
-    publishPath: client/dist
+    startCommand: cd client && npm run start
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
