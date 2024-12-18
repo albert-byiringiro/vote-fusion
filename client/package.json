@@ -4,7 +4,7 @@
     "type": "module",
     "scripts": {
         "dev": "vite --host",
-        "build": "tsc && ./node_modules/.bin/vite build",
+        "build": "tsc && vite build",
         "serve": "vite preview",
         "lint": "eslint .",
         "test": "jest src",
