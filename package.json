@@ -2,24 +2,35 @@
   "name": "vote-fusion",
   "version": "1.0.0",
   "description": "Make decisions with friends via ranked voting!",
-  "main": "index.js",
+  "private": true,
   "workspaces": [
     "client",
     "server",
     "shared"
   ],
   "scripts": {
-    "docker:compose": "docker-compose up -d",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
     "client:dev": "npm run dev --workspace=client",
+    "client:build": "npm run build --workspace=client",
     "server:dev": "wait-on tcp:6379 && npm run start:dev --workspace=server",
-    "start": "concurrently 'npm:docker:compose' 'npm:server:dev' 'npm:client:dev'",
+    "server:build": "npm run build --workspace=server",
+    "shared:build": "npm run build --workspace=shared",
+    "dev": "concurrently 'npm run docker:up' 'npm:server:dev' 'npm:client:dev'",
+    "build": "npm run shared:build && npm run server:build && npm run client:build",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "rimraf **/dist **/build",
     "storybook": "npm run storybook --workspace=client",
-    "stop": "docker-compose down",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "stop": "npm run docker:down"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/albert-byiringiro/ranker-voting-app.git"
+    "url": "git+https://github.com/albert-byiringiro/vote-fusion.git"
   },
   "keywords": [
     "ts",
@@ -31,7 +42,10 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "prop-types": "^15.8.1",
+    "rimraf": "^5.0.0",
+    "typescript": "^4.9.5",
+    "eslint": "^8.57.1",
+    "prettier": "^3.0.0",
     "wait-on": "^6.0.1"
   }
 }
