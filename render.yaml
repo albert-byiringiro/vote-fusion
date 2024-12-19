@@ -43,17 +43,16 @@ services:
     plan: free
     region: frankfurt
     branch: main
-    rootDir: client
     buildCommand: >
-      cd ../shared && npm install && npm run build && cd ../client &&
+      npm ci && cd shared && npm install && npm run build && cd ../client &&
       npm install --save-dev @types/react-transition-group @types/react @types/react-dom &&
-      npm install vite @vitejs/plugin-react && 
+      npm install vite @vitejs/plugin-react &&
       SKIP_PREFLIGHT_CHECK=true npm run build
-    startCommand: cd ../ && npm install && npm run start
+    startCommand: cd client && npm run serve
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
       - key: PORT
         value: 10000
-      - key: NODE_ENV
-        value: production
+      - key: NODE_ENV  
+        value: development 
