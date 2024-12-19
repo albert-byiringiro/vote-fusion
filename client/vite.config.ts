@@ -4,14 +4,7 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 8080,
-  },
-  css: {
-    modules: {
-      localsConvention: 'camelCaseOnly',
-    },
-  },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-  },
+    port: parseInt(process.env.PORT || '3000'),
+    host: true
+  }
 });
