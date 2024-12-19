@@ -11,18 +11,6 @@ export default defineConfig({
       localsConvention: 'camelCaseOnly',
     },
   },
-  build: {
-    minify: false,
-    outDir: 'dist',
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          utils: ['valtio', 'socket.io-client'],
-        },
-      },
-    },
-  },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   },
