@@ -12,18 +12,17 @@ services:
     plan: free
     region: frankfurt
     branch: main
-    buildCommand: >
-      npm install && cd shared && npm install && npm run build && cd ../server &&
-      npm install -g @nestjs/cli && npm install &&
-      npm run build -- --path tsconfig.build.json
+    buildCommand: npm ci && npm run build
     startCommand: cd server && NODE_PATH=../shared/dist node dist/main
+    healthCheckPath: /api/health
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 3000
-      - key: CLIENT_PORT
-        value: 10000
+      - key: CLIENT_URL
+        value: https://votefusion-client.onrender.com
       - key: REDIS_HOST
         fromService:
           type: redis
@@ -34,6 +33,15 @@ services:
           type: redis
           name: votefusion-redis
           property: port
+      - key: REDIS_PASSWORD
+        fromService:
+          type: redis
+          name: votefusion-redis
+          property: password
+    disk:
+      name: tmp
+      mountPath: /tmp
+      sizeGB: 1
 
   - type: web
     name: votefusion-client
@@ -41,14 +49,45 @@ services:
     plan: free
     region: frankfurt
     branch: main
-    buildCommand: >
-      npm ci && cd shared && npm run build && cd ../client &&
-      npm run build
+    buildCommand: npm ci && npm run build
     startCommand: cd client && npm run serve
+    healthCheckPath: /
+    autoDeploy: true
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
+      - key: NODE_ENV
+        value: production
       - key: PORT
         value: 10000
-      - key: NODE_ENV  
-        value: production
+    headers:
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=3600
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+
+routes:
+  - type: redirect
+    source: www.votefusion.com/*
+    destination: votefusion.com/$1
+    status: 301
+
+  - type: rewrite
+    source: /*
+    destination: /index.html
+    condition:
+      pathPattern: ^(?!/api|/assets|/static).*$
+
+deploy:
+  healthCheck:
+    startPeriod: 60
+    interval: 30
+    timeout: 5
+    retries: 3
+
+  notifications:
+    email:
+      success: true
+      failure: true
