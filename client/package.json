@@ -21,7 +21,6 @@
         "react-use": "^17.5.1",
         "socket.io-client": "^4.8.1",
         "valtio": "^1.13.2",
-        "wouter": "^2.12.1",
         "vite": "^6.0.3"
     },
     "devDependencies": {
