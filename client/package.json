@@ -13,6 +13,7 @@
         "build-storybook": "storybook build"
     },
     "dependencies": {
+        "@vitejs/plugin-react": "^4.3.4",
         "nanoid": "^3.3.8",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
@@ -43,7 +44,6 @@
         "@types/react-transition-group": "^4.4.12",
         "@typescript-eslint/eslint-plugin": "^5.62.0",
         "@typescript-eslint/parser": "^5.62.0",
-        "@vitejs/plugin-react": "^4.3.4",
         "autoprefixer": "^10.4.20",
         "babel-loader": "^8.4.1",
         "eslint": "^8.57.1",
