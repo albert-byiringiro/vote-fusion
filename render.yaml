@@ -44,7 +44,6 @@ services:
     buildCommand: >
       npm ci && cd shared && npm run build && cd ../client &&
       npm run build
-    publishDirectory: dist
     envVars:
       - key: VITE_API_URL
         value: https://votefusion-api.onrender.com
